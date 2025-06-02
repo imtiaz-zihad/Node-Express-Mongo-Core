@@ -93,8 +93,21 @@ const server = http.createServer((req, res) => {
       );
     });
   } else if (pathname === "/todos/delete-todo" && req.method === "DELETE") {
-    const id = url.searchParams.get("id");
-  } else {
+  const id = url.searchParams.get("id");
+
+  const data = fs.readFileSync(filePath, { encoding: "utf-8" });
+  const todos = JSON.parse(data);
+
+  const updatedTodos = todos.filter(todo => String(todo.id) !== String(id));
+
+  fs.writeFileSync(filePath, JSON.stringify(updatedTodos, null, 2), {
+    encoding: "utf-8",
+  });
+
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ message: "Todo deleted" }));
+}
+else {
     res.end("Invalid Route\n");
   }
 });
