@@ -15,7 +15,7 @@ app.use("/users", userRouter);
 app.use("/todos", todoRouter);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello People!");
+  res.send("Hello People!!");
 });
 
 
